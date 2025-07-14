@@ -1,104 +1,303 @@
-/* CSS Variables for Theme Management */
+/* ===== CSS Variables for Notes App Theme ===== */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --color-primary: #1976d2;
+  --color-accent: #e91e63;
+  --color-secondary: #424242;
+  --bg-main: #ffffff;
+  --bg-sidebar: #f8f9fa;
+  --bg-note-selected: #e3f2fd;
+  --text-main: #212121;
+  --text-note-title: #1976d2;
+  --text-secondary: #757575;
+  --border: #e0e0e0;
+  --fab-bg: #e91e63;
+  --fab-color: #fff;
+  --btn-primary-bg: #1976d2;
+  --btn-primary-text: #fff;
+  --btn-secondary-bg: #ededed;
+  --btn-secondary-text: #424242;
+  --delete-btn: #e91e63;
+  --delete-btn-hover: #c51162;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+body,
+.note-app-container {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* === Sidebar Layout === */
+.note-app-container {
+  display: flex;
+  height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.sidebar {
+  width: 270px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
+  padding: 0;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.4rem 1.2rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  background: inherit;
+}
+
+.sidebar-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: var(--text-note-title);
+  font-weight: 600;
+}
+
+.fab {
+  background: var(--fab-bg);
+  color: var(--fab-color);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.75rem;
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  box-shadow: 0 3px 8px rgba(233, 30, 99, 0.14);
+  transition: background 0.2s;
+}
+.fab:hover,
+.fab:focus {
+  background: var(--color-primary);
 }
 
-.App-link {
+.note-list {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+.note-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-sidebar);
+  transition: background 0.15s;
+}
+.note-list li.selected {
+  background: var(--bg-note-selected);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+.note-list li .note-title {
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: inherit;
+}
+.note-list li .del-btn {
+  margin-left: 0.8rem;
+  background: none;
+  border: none;
+  color: var(--delete-btn);
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: color 0.16s, opacity 0.15s;
+}
+.note-list li .del-btn:hover,
+.note-list li .del-btn:focus {
+  color: var(--delete-btn-hover);
+  opacity: 1;
+}
+
+.no-notes {
+  padding: 1.3rem;
+  text-align: center;
   color: var(--text-secondary);
-  transition: color 0.3s ease;
+  font-style: italic;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+/* === Main Panel === */
+.main-panel {
+  flex: 1;
+  background: var(--bg-main);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-width: 0;
+  padding: 2.2rem 2.3rem 2.2rem 2.7rem;
+}
+.note-detail {
+  margin: 0 auto;
+  max-width: 650px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 22px 0 rgba(20, 20, 120, 0.03);
+  padding: 2.0rem 2.1rem 1.5rem 2.1rem;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+.note-detail.empty {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: none;
+  box-shadow: none;
+  border: none;
+  min-height: 220px;
+}
+
+.note-detail h2 {
+  font-size: 2.1rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-accent);
+}
+.note-meta {
+  display: flex;
+  gap: 2.4rem;
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.3rem 0;
+}
+
+.note-body {
+  font-size: 1.18rem;
+  margin-bottom: 1.7rem;
+  white-space: pre-line;
+  min-height: 2em;
+}
+
+/* === Editing Form Styles === */
+.note-title-input {
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0.6em 0.4em;
+  color: var(--color-accent);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 0.85em;
+  outline: none;
+  transition: border 0.17s;
+  background: #f9fafc;
+}
+.note-title-input:focus {
+  border-color: var(--color-accent);
+}
+
+.note-body-input {
+  font-size: 1.07rem;
+  font-family: inherit;
+  width: 100%;
+  padding: 0.7em;
+  margin: 0 0 1.2em 0;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: #f9fafc;
+  resize: vertical;
+  min-height: 120px;
+  outline: none;
+  transition: border 0.18s;
+}
+.note-body-input:focus {
+  border-color: var(--color-accent);
+}
+
+/* === Buttons === */
+.note-buttons {
+  display: flex;
+  gap: 1.2em;
+}
+.note-buttons .btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 0.65em 1.6em;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(25, 118, 210, 0.09);
+  transition: background 0.16s;
+}
+.note-buttons .btn-primary:hover,
+.note-buttons .btn-primary:focus {
+  background: var(--color-accent);
+}
+.note-buttons .btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1.05rem;
+  padding: 0.65em 1.6em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+.note-buttons .btn-secondary:hover,
+.note-buttons .btn-secondary:focus {
+  background: #f1f1f1;
+}
+.note-buttons.view {
+  justify-content: flex-end;
+  margin-top: auto;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
-}
-
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* === Miscellaneous Responsive Design === */
+@media (max-width: 800px) {
+  .note-app-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
   }
-  to {
-    transform: rotate(360deg);
+  .sidebar {
+    width: 100%;
+    max-width: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .main-panel {
+    padding: 1.3rem 0.6rem 2.5rem 0.6rem;
   }
 }
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 520px) {
+  .sidebar-header {
+    padding: 0.5rem 0.7rem 0.5rem 0.6rem;
+  }
+  .main-panel,
+  .note-detail {
+    padding: 0.7rem !important;
+  }
+  .note-detail h2 {
+    font-size: 1.13rem;
   }
 }
